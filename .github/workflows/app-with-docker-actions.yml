@@ -60,6 +60,10 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
+          sudo apt-get update
+          sudo apt install -y docker.io
+          sudo usermod -aG docker $USER
+          
           sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app-with-actions
           sudo docker stop $(sudo docker ps -qa)
           sudo docker rm $(sudo docker ps -qa)
